@@ -1,0 +1,49 @@
+name: delproxy
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 */6 * * *"
+
+    
+jobs:
+  Fork-Filter-list:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4.1.0
+        with:
+          repository: SouthAlley/q
+          path: q-repo
+          
+
+if [ -e "q-repo/$path" ]; then
+  sed -i 's/, /,/g; s/host,/DOMAIN,/gi; s/host-suffix,/DOMAIN-SUFFIX,/gi; s/host-keyword,/DOMAIN-KEYWORD,/gi; s/ip-cidr,/IP-CIDR,/gi; s/ip6-cidr,/IP-CIDR6,/gi; s/user-agent,/USER-AGENT,/g; s/;//g; s/#.*//; /^[[:space:]]*$/d' "q-repo/rule/$path"
+  sed -i '/IP-CIDR/ {/no-resolve/! s/$/,no-resolve/}; /IP-CIDR6/ {/no-resolve/! s/$/,no-resolve/}' "q-repo/rule/$path"
+  
+  # 根据文件路径判断是 surge 还是 surfboard，并删除相应规则
+  if [[ "$path" == *"Surfboard"* ]]; then
+    sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "q-repo/$path"
+  fi
+else
+  echo "q-repo/rule/$path 未找到。"
+fi
+
+
+      - name: Add and Commit changes
+        run: |
+          cd q-repo
+          if [[ -n $(git status -s) ]]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add "rule/ad/attach/*" "rule/global/attach/*" "rule/proxy/attach/*"
+            git commit -m "Update rules"
+            git push origin HEAD
+          else
+            echo "No changes to commit."
+          fi
+
+
+
+          
