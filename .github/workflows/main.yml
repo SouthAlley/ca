@@ -29,12 +29,29 @@ jobs:
                curl -L -o "ca-repo/$path" "$url"
 
                if [ -e "ca-repo/$path" ]; then
-                  sed -i 's/, /,/g; s/host,/DOMAIN,/gi; s/host-suffix,/DOMAIN-SUFFIX,/gi; s/host-keyword,/DOMAIN-KEYWORD,/gi; s/ip-cidr,/IP-CIDR,/gi; s/ip6-cidr,/IP-CIDR6,/gi; s/user-agent,/USER-AGENT,/g; s/;//g; s/#.*//; /^[[:space:]]*$/d' "ca-repo/$path"
-                  sed -i '/IP-CIDR/ {/no-resolve/! s/$/,no-resolve/}; /IP-CIDR6/ {/no-resolve/! s/$/,no-resolve/}' "ca-repo/$path"
+                  # 修改逗号为单独的逗号
+                  sed -i 's/, /,/g' "$file"
+                  # 替换 host 为 DOMAIN，忽略大小写
+                  sed -i -e 's/host,/DOMAIN,/gi' "$file"
+                  sed -i -e 's/host-suffix,/DOMAIN-SUFFIX,/gi' "$file"
+                  sed -i -e 's/host-keyword,/DOMAIN-KEYWORD,/gi' "$file"
+                  sed -i 's/ip-cidr,/IP-CIDR,/gi' "$file"
+                  sed -i 's/ip6-cidr,/IP-CIDR6,/gi' "$file"
+                  sed -i 's/user-agent,/USER-AGENT,/g' "$file"
+                  # 删除不必要的部分
+                  sed -i 's/\([^,]*,[^,]*\),.*/\1/g' "$file"
+                  # 如果包含 IP-CIDR 且不包含 no-resolve 则添加 no-resolve
+                  sed -i '/IP-CIDR/ {/no-resolve/! s/$/,no-resolve/}; /IP-CIDR6/ {/no-resolve/! s/$/,no-resolve/}' "$file"
+                  # 删除分号
+                  sed -i 's/;//g' "$file"
+                  # 删除注释
+                  sed -i 's/#.*//' "$file"
+                  # 删除空行
+                  sed -i '/^[[:space:]]*$/d' "$file"
   
                   # 根据文件路径判断是 surge 还是 surfboard，并删除相应规则
                   if [[ "$path" == *"Surfboard"* ]]; then
-                    sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "ca-repo/$path"
+                    sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d'
                   fi
                else
                   echo "ca-repo/rule/$path 未找到。"
