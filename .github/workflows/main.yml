@@ -30,28 +30,28 @@ jobs:
 
                if [ -e "ca-repo/$path" ]; then
                   # 修改逗号为单独的逗号
-                  sed -i 's/, /,/g' "$file"
+                  sed -i 's/, /,/g'  "ca-repo/$path"
                   # 替换 host 为 DOMAIN，忽略大小写
-                  sed -i -e 's/host,/DOMAIN,/gi' "$file"
-                  sed -i -e 's/host-suffix,/DOMAIN-SUFFIX,/gi' "$file"
-                  sed -i -e 's/host-keyword,/DOMAIN-KEYWORD,/gi' "$file"
-                  sed -i 's/ip-cidr,/IP-CIDR,/gi' "$file"
-                  sed -i 's/ip6-cidr,/IP-CIDR6,/gi' "$file"
-                  sed -i 's/user-agent,/USER-AGENT,/g' "$file"
+                  sed -i -e 's/host,/DOMAIN,/gi' "ca-repo/$path"
+                  sed -i -e 's/host-suffix,/DOMAIN-SUFFIX,/gi' "ca-repo/$path"
+                  sed -i -e 's/host-keyword,/DOMAIN-KEYWORD,/gi' "ca-repo/$path"
+                  sed -i 's/ip-cidr,/IP-CIDR,/gi' "ca-repo/$path"
+                  sed -i 's/ip6-cidr,/IP-CIDR6,/gi' "ca-repo/$path"
+                  sed -i 's/user-agent,/USER-AGENT,/g' "ca-repo/$path"
                   # 删除不必要的部分
-                  sed -i 's/\([^,]*,[^,]*\),.*/\1/g' "$file"
+                  sed -i 's/\([^,]*,[^,]*\),.*/\1/g' "ca-repo/$path"
                   # 如果包含 IP-CIDR 且不包含 no-resolve 则添加 no-resolve
-                  sed -i '/IP-CIDR/ {/no-resolve/! s/$/,no-resolve/}; /IP-CIDR6/ {/no-resolve/! s/$/,no-resolve/}' "$file"
+                  sed -i '/IP-CIDR/ {/no-resolve/! s/$/,no-resolve/}; /IP-CIDR6/ {/no-resolve/! s/$/,no-resolve/}' "ca-repo/$path"
                   # 删除分号
-                  sed -i 's/;//g' "$file"
+                  sed -i 's/;//g' "ca-repo/$path"
                   # 删除注释
-                  sed -i 's/#.*//' "$file"
+                  sed -i 's/#.*//' "ca-repo/$path"
                   # 删除空行
-                  sed -i '/^[[:space:]]*$/d' "$file"
+                  sed -i '/^[[:space:]]*$/d' "ca-repo/$path"
   
                   # 根据文件路径判断是 surge 还是 surfboard，并删除相应规则
                   if [[ "$path" == *"Surfboard"* ]]; then
-                    sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d'
+                    sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d''/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "ca-repo/$path"
                   fi
                else
                   echo "ca-repo/rule/$path 未找到。"
