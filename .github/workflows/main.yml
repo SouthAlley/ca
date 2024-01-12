@@ -16,19 +16,17 @@ jobs:
           path: ca-repo
 
       - name: 下载文件到 Surge
-        run: |
-           # 定义关      
+        run: |      
            declare -A file_path_url=(
                  ["MyBlockAds.list"]="surge/rule/ad/del.ini https://raw.githubusercontent.com/RuCu6/QuanX/main/Rules/MyBlockAds.list"
                  ["StreamingRule.list"]="Surfboard/rule/attach/del.ini https://raw.githubusercontent.com/SouthAlley/z/main/Surge/StreamingRule/StreamingRule.list"
                  ["AnotherRule.list"]="surge/rule/del.ini https://raw.githubusercontent.com/SouthAlley/z/main/Surge/StreamingRule/StreamingRule.list"
-                 )
+           )
 
            for file in "${!file_path_url[@]}"; do
                IFS=' ' read -r path url <<< "${file_path_url[$file]}"
                mkdir -p "ca-repo/${path%/*}"
                curl -L -o "ca-repo/$path" "$url"
-
 
                if [ -e "ca-repo/$path" ]; then
                   sed -i 's/, /,/g; s/host,/DOMAIN,/gi; s/host-suffix,/DOMAIN-SUFFIX,/gi; s/host-keyword,/DOMAIN-KEYWORD,/gi; s/ip-cidr,/IP-CIDR,/gi; s/ip6-cidr,/IP-CIDR6,/gi; s/user-agent,/USER-AGENT,/g; s/;//g; s/#.*//; /^[[:space:]]*$/d' "q-repo/rule/$path"
@@ -41,6 +39,7 @@ jobs:
                else
                   echo "ca-repo/rule/$path 未找到。"
                fi
+           done
 
 
       - name: Add and Commit changes
