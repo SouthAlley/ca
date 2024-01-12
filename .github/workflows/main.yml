@@ -29,7 +29,7 @@ jobs:
                curl -L -o "ca-repo/$path" "$url"
 
                if [ -e "ca-repo/$path" ]; then
-                  sed -i 's/, /,/g; s/host,/DOMAIN,/gi; s/host-suffix,/DOMAIN-SUFFIX,/gi; s/host-keyword,/DOMAIN-KEYWORD,/gi; s/ip-cidr,/IP-CIDR,/gi; s/ip6-cidr,/IP-CIDR6,/gi; s/\([^,]*,[^,]*\),.*/\1/g; s/user-agent,/USER-AGENT,/g; "ca-repo/$path"
+                  sed -i 's/, /,/g; s/host,/DOMAIN,/gi; s/host-suffix,/DOMAIN-SUFFIX,/gi; s/host-keyword,/DOMAIN-KEYWORD,/gi; s/ip-cidr,/IP-CIDR,/gi; s/ip6-cidr,/IP-CIDR6,/gi; s/\([^,]*,[^,]*\),.*/\1/g; s/user-agent,/USER-AGENT,/g;' "ca-repo/$path"
                   sed -i '/IP-CIDR/ {/no-resolve/! s/$/,no-resolve/}; /IP-CIDR6/ {/no-resolve/! s/$/,no-resolve/}' "ca-repo/$path"
   
                   # 根据文件路径判断是 surge 还是 surfboard，并删除相应规则
