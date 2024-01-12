@@ -34,7 +34,7 @@ jobs:
   
                   # 根据文件路径判断是 surge 还是 surfboard，并删除相应规则
                   if [[ "$path" == *"Surfboard"* ]]; then
-                    sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "q-repo/$path"
+                    sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "ca-repo/$path"
                   fi
                else
                   echo "ca-repo/rule/$path 未找到。"
