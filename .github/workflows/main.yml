@@ -19,7 +19,7 @@ jobs:
         run: |      
            declare -A file_path_url=(
                  ["MyBlockAds.list"]="surge/rule/ad/del.ini https://raw.githubusercontent.com/RuCu6/QuanX/main/Rules/MyBlockAds.list"
-                 ["StreamingRule.list"]="Surfboard/rule/attach/del.ini https://raw.githubusercontent.com/SouthAlley/z/main/Surge/Proxy.list"
+                 ["StreamingRule.list"]="Surfboard/rule/attach/del.ini https://raw.githubusercontent.com/sve1r/Rules-For-Quantumult-X/main/Rules/Services/Microsoft.list"
                  ["AnotherRule.list"]="surge/rule/del.ini https://raw.githubusercontent.com/RuCu6/QuanX/main/Rules/MyBlockAds.list"
            )
 
