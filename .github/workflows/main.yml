@@ -2,8 +2,6 @@ name: delproxy
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "0 */6 * * *"
 
     
 jobs:
@@ -14,30 +12,44 @@ jobs:
       - name: Checkout target repository
         uses: actions/checkout@v4.1.0
         with:
-          repository: SouthAlley/q
-          path: q-repo
-          
+          repository: SouthAlley/ca
+          path: ca-repo
 
-if [ -e "q-repo/$path" ]; then
-  sed -i 's/, /,/g; s/host,/DOMAIN,/gi; s/host-suffix,/DOMAIN-SUFFIX,/gi; s/host-keyword,/DOMAIN-KEYWORD,/gi; s/ip-cidr,/IP-CIDR,/gi; s/ip6-cidr,/IP-CIDR6,/gi; s/user-agent,/USER-AGENT,/g; s/;//g; s/#.*//; /^[[:space:]]*$/d' "q-repo/rule/$path"
-  sed -i '/IP-CIDR/ {/no-resolve/! s/$/,no-resolve/}; /IP-CIDR6/ {/no-resolve/! s/$/,no-resolve/}' "q-repo/rule/$path"
+      - name: 下载文件到 Surge
+        run: |
+           # 定义关      
+           declare -A file_path_url=(
+                 ["MyBlockAds.list"]="surge/rule/ad/del.ini https://raw.githubusercontent.com/RuCu6/QuanX/main/Rules/MyBlockAds.list"
+                 ["StreamingRule.list"]="Surfboard/rule/attach/del.ini https://raw.githubusercontent.com/SouthAlley/z/main/Surge/StreamingRule/StreamingRule.list"
+                 ["AnotherRule.list"]="surge/rule/del.ini https://raw.githubusercontent.com/SouthAlley/z/main/Surge/StreamingRule/StreamingRule.list"
+                 )
+
+           for file in "${!file_path_url[@]}"; do
+               IFS=' ' read -r path url <<< "${file_path_url[$file]}"
+               mkdir -p "ca-repo/${path%/*}"
+               curl -L -o "ca-repo/$path" "$url"
+
+
+               if [ -e "ca-repo/$path" ]; then
+                  sed -i 's/, /,/g; s/host,/DOMAIN,/gi; s/host-suffix,/DOMAIN-SUFFIX,/gi; s/host-keyword,/DOMAIN-KEYWORD,/gi; s/ip-cidr,/IP-CIDR,/gi; s/ip6-cidr,/IP-CIDR6,/gi; s/user-agent,/USER-AGENT,/g; s/;//g; s/#.*//; /^[[:space:]]*$/d' "q-repo/rule/$path"
+                  sed -i '/IP-CIDR/ {/no-resolve/! s/$/,no-resolve/}; /IP-CIDR6/ {/no-resolve/! s/$/,no-resolve/}' "q-repo/rule/$path"
   
-  # 根据文件路径判断是 surge 还是 surfboard，并删除相应规则
-  if [[ "$path" == *"Surfboard"* ]]; then
-    sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "q-repo/$path"
-  fi
-else
-  echo "q-repo/rule/$path 未找到。"
-fi
+                  # 根据文件路径判断是 surge 还是 surfboard，并删除相应规则
+                  if [[ "$path" == *"Surfboard"* ]]; then
+                    sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "q-repo/$path"
+                  fi
+               else
+                  echo "ca-repo/rule/$path 未找到。"
+               fi
 
 
       - name: Add and Commit changes
         run: |
-          cd q-repo
+          cd ca-repo
           if [[ -n $(git status -s) ]]; then
             git config --local user.email "action@github.com"
             git config --local user.name "GitHub Action"
-            git add "rule/ad/attach/*" "rule/global/attach/*" "rule/proxy/attach/*"
+            git add "surge/rule/*" "Surfboard/rule/*"
             git commit -m "Update rules"
             git push origin HEAD
           else
