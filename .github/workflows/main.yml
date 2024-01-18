@@ -21,6 +21,7 @@ jobs:
                ["Global.list"]="Surge/Rule/Global.list https://ruleset.skk.moe/List/domainset/apple_cdn.conf"
                ["Proxy.list"]="Surge/Rule/Proxy.list https://raw.githubusercontent.com/SouthAlley/q/main/local/proxy.list"
                ["Proxy.list"]="Surge/Rule/ywst.list https://raw.githubusercontent.com/SouthAlley/ca/main/a.list"
+               ["MyBlockAds.list"]="Surge/Rule/MyBlockAds.list https://raw.githubusercontent.com/RuCu6/QuanX/main/Rules/MyBlockAds.list"
                
                )
 
