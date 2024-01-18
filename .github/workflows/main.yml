@@ -23,6 +23,7 @@ jobs:
                ["Proxy.list"]="Surge/Rule/ywst.list https://raw.githubusercontent.com/SouthAlley/ca/main/a.list"
                ["MyBlockAds.list"]="Surge/Rule/MyBlockAds.list https://raw.githubusercontent.com/RuCu6/QuanX/main/Rules/MyBlockAds.list"
                ["BlockAds.list"]="Surge/Rule/BlockAds.list https://raw.githubusercontent.com/fmz200/wool_scripts/main/QuantumultX/filter/fenliuxiuzheng.list"
+               ["BlockAds.list"]="Surge/Rule/cdn.list https://ruleset.skk.moe/List/domainset/cdn.conf"
                
                )
 
