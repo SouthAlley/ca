@@ -95,9 +95,9 @@ jobs:
                else
                    # 规则修改
                    if [ -f "$original_file" ]; then
+                        process_rules
                         sed -i 's/^\./DOMAIN-SUFFIX,/g' "$original_file"
                         sed -E -i '/^[^#]*[^,]$/ s/^(.*)$/DOMAIN,\1/' "$original_file"
-                        process_rules
                         if [[ "$file" == Surfboard_* ]]; then
                             sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "$original_file"
                         fi
