@@ -1,5 +1,11 @@
+DOMAIN,// analytics.strava.com
+# analytics.strava.com
 # .
 #.
+DOMAIN-SUFFIX,
+DOMAIN-SUFFIX,,analytics.strava.com
+,analytics.strava.com
+DOMAIN,analytics.strava
 DOMAIN,analytics.strava.com
 DOMAIN,blzddist1-a.akamaihd.net
 DOMAIN,cdn.angruo.com
