@@ -100,7 +100,7 @@ jobs:
                    if [ -f "$original_file" ]; then
                         process_rules
                         sed -i 's/^\./DOMAIN-SUFFIX,/g' "$original_file"
-                        sed -E -i '/^[^#\/]/ s/^[^,]*$/DOMAIN,&/' "$original_file"
+                        sed -E -i '/^[^#\/[:space:]]/ s/^[^,]*$/DOMAIN,&/' "$original_file"
                         if [[ "$file" == Surfboard_* ]]; then
                             sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "$original_file"
                         fi
