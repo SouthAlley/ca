@@ -18,7 +18,7 @@ jobs:
       - name: 下载文件
         run: |
            declare -A file_path_url=(
-               ["Global.list"]="Surge/Rule/Global.list https://raw.githubusercontent.com/SouthAlley/q/main/local/global.list"
+               ["Global.list"]="Surge/Rule/Global.list https://ruleset.skk.moe/List/domainset/apple_cdn.conf"
                ["Proxy.list"]="Surge/Rule/Proxy.list https://raw.githubusercontent.com/SouthAlley/q/main/local/proxy.list"
                
                )
@@ -95,7 +95,6 @@ jobs:
                    # 规则修改
                    if [ -f "$original_file" ]; then
                         sed -i 's/^\./DOMAIN-SUFFIX,/g' "$original_file"
-                        sed -i '/^[^,]/s/^/DOMAIN,/g' "$original_file"
                         process_rules
                         if [[ "$file" == Surfboard_* ]]; then
                             sed -i '/^\(URL-REGEX\|USER-AGENT\|OR\|AND\),.*$/d' "$original_file"
