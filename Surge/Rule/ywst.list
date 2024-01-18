@@ -3,13 +3,13 @@ DOMAIN,221.226.128.146/32
 DOMAIN,2a0b:b580::/48
 2a0b:b581::/48,no-resolve
 DOMAIN,%E4%B8%AD%E5%9B%BD%E5%B7%A5%E5%95%86%E9%93%B6%E8%A1%8C*
-DOMAIN,// analytics.strava.com
-DOMAIN,/analytics.strava.com
-DOMAIN,/ analytics.strava.com
-DOMAIN,/* 
-DOMAIN,analytics
+// analytics.strava.com
+/analytics.strava.com
+/ analytics.strava.com
+/* 
+DOMAIN,  analytics
 DOMAIN,*/
-DOMAIN,/* analytics */
+/* analytics */
 # analytics.strava.com
 # .
 #.
