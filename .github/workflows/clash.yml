@@ -1,0 +1,55 @@
+name: Update rules
+
+on:
+  workflow_dispatch:
+
+
+jobs:
+  Update_rules:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout target repository
+        uses: actions/checkout@v4.1.0
+        with:
+          repository: SouthAlley/ca
+          path: ca-repo
+          
+      - name: Download files to Clash
+        run: |
+          mkdir -p ca-repo/Clash/Rule
+          # 流媒体
+          curl -L -o ca-repo/Clash/Rule/Emby.list "https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/InternationalDownloadCDN.yaml"
+
+
+      - name: Edit Clash/Rule/ yaml to text
+        run: |
+          cd ca-repo/Clash/Rule
+          for file in *.list; do
+             if [ -f "$file" ]; then
+               # 删除payload
+               sed -i 's/payload://g' "$file"
+               # 删除 - 号
+               sed -i 's/#  - /# /g' "$file"
+               sed -i 's/  # - /# /g' "$file"
+               sed -i 's/  - //g' "$file"
+               # 删除单引号
+               sed -i "s/'//g" "$file"
+             else
+               echo "$file not found."
+             fi
+           done
+      
+
+      - name: Add and Commit changes
+        run: |
+          cd ca-repo
+          if [[ -n $(git status -s) ]]; then
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add .
+            git commit -m "Update rules"
+            git push
+          else
+            echo "No changes to commit."
+          fi
