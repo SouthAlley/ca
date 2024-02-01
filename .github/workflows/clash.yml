@@ -20,6 +20,7 @@ jobs:
           mkdir -p ca-repo/Clash/Rule
           # 流媒体
           curl -L -o ca-repo/Clash/Rule/Emby.list "https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/InternationalDownloadCDN.yaml"
+          curl -L -o ca-repo/Clash/Rule/Emb.list "https://gitlab.com/lodepuly/vpn_tool/-/raw/master/Tool/Clash/Rule/ChinaDownloadCDN.yaml"
 
 
       - name: Edit Clash/Rule/ yaml to text
