@@ -110,9 +110,9 @@ rule-providers:
  Google: {<<: *c, format: text, path: ./rule-providers/Google.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Google.list}
  Microsoft: {<<: *c, format: text, path: ./rule-providers/Microsoft.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Microsoft.list}
  Apple: {<<: *c, format: text, path: ./rule-providers/Apple.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Apple.list}
- Proxy: {<<: *c, format: text, path: ./rule-providers/ProxyGFW.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/ProxyGFW.list}
- China: {<<: *c, format: text, path: ./rule-providers/ChinaDomain.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/ChinaDomain.list}
- LAN: {<<: *c, format: text, path: ./rule-providers/Lan.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Lan.list}
+ Proxy: {<<: *c, format: text, path: ./rule-providers/Proxy.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/ProxyGFW.list}
+ China: {<<: *c, format: text, path: ./rule-providers/China.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/ChinaDomain.list}
+ LAN: {<<: *c, format: text, path: ./rule-providers/LAN.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Lan.list}
  
 rules:
   - RULE-SET,Download,DIRECT
