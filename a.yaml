@@ -106,7 +106,7 @@ rule-providers:
  OpenAI: {<<: *c, format: text, path: ./rule-providers/OpenAI.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/OpenAI.list}
  ProxyMedia: {<<: *c, format: text, path: ./rule-providers/ProxyMedia.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/ProxyMedia.list}
  Telegram: {<<: *c, format: text, path: ./rule-providers/Telegram.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Telegram.list}
- Game: {<<: *c, format: text, path: ./rule-providers/steam.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Steam.list}
+ Game: {<<: *c, format: text, path: ./rule-providers/Game.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Steam.list}
  Google: {<<: *c, format: text, path: ./rule-providers/Google.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Google.list}
  Microsoft: {<<: *c, format: text, path: ./rule-providers/Microsoft.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Microsoft.list}
  Apple: {<<: *c, format: text, path: ./rule-providers/Apple.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Apple.list}
