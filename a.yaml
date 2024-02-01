@@ -81,17 +81,18 @@ proxy-groups:
   - {name: ⭐️ Proxy, type: select, use: [Subscribe1, Subscribe2]}
 
   - {name: 🕹️ Manual, type: select, proxies: [⭐️ Proxy, 🇭🇰 延时优选, 🍟 低倍节点, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇨🇳 台湾节点]}
-  - {name: 🍟 低倍节点, <<: *select, filter: "0.2"}
   - {name: 📽️ Streaming, type: select, proxies: [🍟 低倍节点, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点]}
   - {name: 🍎 Apple, type: select, proxies: [DIRECT, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点]}
   - {name: Ⓜ️ Microsoft, type: select, proxies: [DIRECT, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点]}
   - {name: 🌎 Google, type: select, proxies: [🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点]}
   - {name: 🎈 Telegram, type: select, proxies: [🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点]}
   - {name: 🤖 OpenAI, type: select, proxies: [🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇨🇳 台湾节点]}
+  - {name: 🚀 ProxyDownload, type: select, proxies: [DIRECT, 🍟 低倍节点, 🕹️ Manual]}
   - {name: 🎮 Game, type: select, proxies: [DIRECT, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇹🇷 土耳其节点, 🇦🇷 阿根廷节点]}
   - {name: ♾️ Final, type: select, proxies: [DIRECT, 🕹️ Manual]}
 
   # 节点地区
+  - {name: 🍟 低倍节点, <<: *select, filter: "0.2"}
   - {name: 🇭🇰 香港节点, <<: *select, filter: "^(?=.*((?i)🇭🇰|香港|(\b(HK\d+|Hong Kong)\b)))(?!.*((?i)回国|校园|游戏|消耗|(\b(GAME)\b))).*$"}
   - {name: 🇺🇸 美国节点, <<: *select, filter: "^(?=.*((?i)🇺🇸|美国|(\b(US\d+|United States)\b)))(?!.*((?i)回国|校园|游戏|消耗|(\b(GAME)\b))).*$"}
   - {name: 🇯🇵 日本节点, <<: *select, filter: "^(?=.*((?i)🇯🇵|日本|(\b(JP\d+|Japan)\b)))(?!.*((?i)回国|校园|游戏|消耗|(\b(GAME)\b))).*$"}
@@ -102,20 +103,24 @@ proxy-groups:
 
 # 分流规则
 rule-providers:
- Download: {<<: *c, format: text, path: ./rule-providers/Download.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Download.list}
- OpenAI: {<<: *c, format: text, path: ./rule-providers/OpenAI.list,  url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/OpenAI.list}
- ProxyMedia: {<<: *c, format: text, path: ./rule-providers/ProxyMedia.list,  url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/ProxyMedia.list}
- Telegram: {<<: *c, format: text, path: ./rule-providers/Telegram.list,  url: https://github.com/Repcz/Tool/raw/X/Clash/Rules/Telegram.list}
- Game: {<<: *c, format: text, path: ./rule-providers/Game.list,  url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Game.list}
- Google: {<<: *c, format: text, path: ./rule-providers/Google.list,  url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Google.list}
- Microsoft: {<<: *c, format: text, path: ./rule-providers/Microsoft.list,  url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Microsoft.list}
- Apple: {<<: *c, format: text, path: ./rule-providers/Apple.list,  url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Apple.list}
- Proxy: {<<: *c, format: text, path: ./rule-providers/Proxy.list,  url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Proxy.list}
- China: {<<: *c, format: text, path: ./rule-providers/China.list,  url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/China.list}
- LAN: {<<: *c, format: text, path: ./rule-providers/LAN.list,  url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/LAN.list}
+ Direct: {<<: *c, format: text, path: ./rule-providers/Direct.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Direct.list}
+ ChinaGameDownload: {<<: *c, format: text, path: ./rule-providers/ChinaGameDownload.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/ChinaGameDownload.list}
+ ProxyDownloadCDN: {<<: *c, format: text, path: ./rule-providers/ProxyDownloadCDN.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/ProxyDownloadCDN.list}
+ OpenAI: {<<: *c, format: text, path: ./rule-providers/OpenAI.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/OpenAI.list}
+ ProxyMedia: {<<: *c, format: text, path: ./rule-providers/ProxyMedia.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/ProxyMedia.list}
+ Telegram: {<<: *c, format: text, path: ./rule-providers/Telegram.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Telegram.list}
+ Game: {<<: *c, format: text, path: ./rule-providers/Game.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Game.list}
+ Google: {<<: *c, format: text, path: ./rule-providers/Google.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Google.list}
+ Microsoft: {<<: *c, format: text, path: ./rule-providers/Microsoft.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Microsoft.list}
+ Apple: {<<: *c, format: text, path: ./rule-providers/Apple.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Apple.list}
+ Proxy: {<<: *c, format: text, path: ./rule-providers/Proxy.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/Proxy.list}
+ China: {<<: *c, format: text, path: ./rule-providers/China.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/China.list}
+ LAN: {<<: *c, format: text, path: ./rule-providers/LAN.list, url: https://raw.githubusercontent.com/Jard1n/VPN_Tool/main/Clash/Rule/LAN.list}
  
 rules:
-  - RULE-SET,Download,DIRECT
+  - RULE-SET,Direct,DIRECT
+  - RULE-SET,ChinaGameDownload,DIRECT
+  - RULE-SET,ProxyDownloadCDN,🚀 ProxyDownload
   - RULE-SET,OpenAI,🤖 OpenAI
   - RULE-SET,ProxyMedia,📽️ Streaming
   - RULE-SET,Telegram,🎈 Telegram
