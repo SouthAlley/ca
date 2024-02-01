@@ -1,4 +1,4 @@
-name: Update rules
+name: clash
 
 on:
   workflow_dispatch:
