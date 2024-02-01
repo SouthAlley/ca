@@ -55,14 +55,17 @@ dns:
 
 
 # 建立锚点
-pg: &pg {type: select, proxies: [🚀 手动切换, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🇯🇵 日本节点,  🇨🇳 台湾节点, ♻️ 自动选择, ⚠️ 故障转移, DIRECT]}
+# 订阅更新和延迟测试
 p: &p {type: http, interval: 86400, health-check: {enable: true, url: http://www.gstatic.com/generate_204, interval: 1800}}
+# 自动选择策略组
 auto: &auto {type: url-test, lazy: true, url: http://www.gstatic.com/generate_204, interval: 900, use: [Subscribe1, Subscribe2]}
+# 手动选择策略组
 select: &select {type: select, use: [Subscribe1, Subscribe2]}
-fallback: &fallback {type: fallback, lazy: true, url: http://www.gstatic.com/generate_204, interval: 900, use: [Subscribe1, Subscribe2]}
-load-balance: &load-balance {type: load-balance, lazy: true, url: http://www.gstatic.com/generate_204, interval: 900, use: [Subscribe1, Subscribe2]}
+# classical规则
 c: &c {type: http, behavior: classical, interval: 86400}
+# domain规则
 d: &d {type: http, behavior: domain, interval: 86400}
+# ipcidr规则
 i: &i {type: http, behavior: ipcidr, interval: 86400}
 
 # 机场订阅
@@ -75,22 +78,26 @@ proxies: null
 
 # 代理策略
 proxy-groups:
-  - {name: 🕹️ Manual, type: select, use: [Subscribe1, Subscribe2], proxies: [🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇨🇳 台湾节点, DIRECT]}
-  - {name: 📽️ Streaming, <<: *pg}
-  - {name: 🍎 Apple, <<: *pg}
-  - {name: Ⓜ️ Microsoft, <<: *pg}
-  - {name: 🌎 Google, <<: *pg}
-  - {name: 🎈 Telegram, <<: *pg}
-  - {name: 🤖 OpenAI, <<: *pg}
-  - {name: 🎮 Game, <<: *pg}
-  - {name: ♾️ Final, <<: *pg}
+  - {name: ⭐️ Proxy, type: select, use: [Subscribe1, Subscribe2]}
+
+  - {name: 🕹️ Manual, type: select, proxies: [⭐️ Proxy, 🇭🇰 延时优选, 🍟 低倍节点, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇨🇳 台湾节点]}
+  - {name: 🍟 低倍节点, <<: *select, filter: "0.2"}
+  - {name: 📽️ Streaming, type: select, proxies: [🍟 低倍节点, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点]}
+  - {name: 🍎 Apple, type: select, proxies: [DIRECT, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点]}
+  - {name: Ⓜ️ Microsoft, type: select, proxies: [DIRECT, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点]}
+  - {name: 🌎 Google, type: select, proxies: [🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点]}
+  - {name: 🎈 Telegram, type: select, proxies: [🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点]}
+  - {name: 🤖 OpenAI, type: select, proxies: [🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点, 🇨🇳 台湾节点]}
+  - {name: 🎮 Game, type: select, proxies: [DIRECT, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇹🇷 土耳其节点, 🇦🇷 阿根廷节点]}
+  - {name: ♾️ Final, type: select, proxies: [DIRECT, 🕹️ Manual]}
 
   # 节点地区
-  - {name: 🇭🇰 香港节点, <<: *auto, filter: "^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)\b)))(?!.*((?i)回国|校园|游戏|(\b(GAME)\b))).*$"}
-  - {name: 🇺🇸 美国节点, <<: *auto, filter: "^(?=.*((?i)🇺🇸|美国|波特兰|达拉斯|俄勒冈|凤凰城|费利蒙|硅谷|拉斯维加斯|洛杉矶|圣何塞|圣克拉拉|西雅图|芝加哥|(\b(US|United States)\b)))(?!.*((?i)回国|校园|游戏|(\b(GAME)\b))).*$"}
-  - {name: 🇸🇬 狮城节点, <<: *auto, filter: "^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG|Singapore)\b)))(?!.*((?i)回国|校园|游戏|(\b(GAME)\b))).*$"}
-  - {name: 🇯🇵 日本节点, <<: *auto, filter: "^(?=.*((?i)🇯🇵|日本|川日|东京|大阪|泉日|埼玉|(\b(JP|Japan)\b)))(?!.*((?i)回国|校园|游戏|(\b(GAME)\b))).*$"}
-  - {name: 🇨🇳 台湾节点, <<: *auto, filter: "(?i)🇹🇼|台湾|(\b(TW|Tai|Taiwan)\b)"}
+  - {name: 🇭🇰 香港节点, <<: *select, filter: "^(?=.*((?i)🇭🇰|香港|(\b(HK\d+|Hong Kong)\b)))(?!.*((?i)回国|校园|游戏|消耗|(\b(GAME)\b))).*$"}
+  - {name: 🇺🇸 美国节点, <<: *select, filter: "^(?=.*((?i)🇺🇸|美国|(\b(US\d+|United States)\b)))(?!.*((?i)回国|校园|游戏|消耗|(\b(GAME)\b))).*$"}
+  - {name: 🇯🇵 日本节点, <<: *select, filter: "^(?=.*((?i)🇯🇵|日本|(\b(JP\d+|Japan)\b)))(?!.*((?i)回国|校园|游戏|消耗|(\b(GAME)\b))).*$"}
+  - {name: 🇨🇳 台湾节点, <<: *select, filter: "^(?=.*((?i)🇨🇳|台湾|(\b(TW\d+|Taiwan)\b)))(?!.*((?i)回国|校园|游戏|消耗|(\b(GAME)\b))).*$"}
+  - {name: 🇸🇬 狮城节点, <<: *select, filter: "^(?=.*((?i)🇸🇬|新加坡|狮|(\b(SG\d+|Singapore)\b)))(?!.*((?i)回国|校园|游戏|消耗|(\b(GAME)\b))).*$"}
+  - {name: 🇭🇰 延时优选, <<: *auto, filter: "^(?=.*((?i)🇭🇰|香港|(\b(HK\d+|Hong Kong)\b)))(?!.*((?i)回国|校园|游戏|消耗|(\b(GAME)\b)|(20x|[2-9]x))).*$"}
 
 
 # 分流规则
