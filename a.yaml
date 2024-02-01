@@ -79,14 +79,14 @@ proxies: null
 # 代理策略
 proxy-groups:
   - {name: 🕹️ Manual, type: select, use: [Subscribe], proxies: [🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇨🇳 台湾节点, DIRECT]}
-  - {name: 📽️ Streaming, type: select, proxies: [🍟 低倍节点, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 新加坡节点, 🇯🇵 日本节点]}
+  - {name: 📽️ Streaming, <<: *pg}
   - {name: 🍎 Apple, <<: *pg}
   - {name: Ⓜ️ Microsoft, <<: *pg}
   - {name: 🌎 Google, <<: *pg}
   - {name: 🎈 Telegram, <<: *pg}
   - {name: 🤖 OpenAI, <<: *pg}
-  - {name: 🚀 ProxyDownload, type: select, proxies: [DIRECT, 🍟 低倍节点, 🕹️ Manual]}
-  - {name: 🎮 Game, type: select, proxies: [DIRECT, 🕹️ Manual, 🇭🇰 香港节点, 🇺🇸 美国节点, 🇹🇷 土耳其节点, 🇦🇷 阿根廷节点]}
+  - {name: 🚀 ProxyDownload, <<: *pg}
+  - {name: 🎮 Game, <<: *pg}
   - {name: ♾️ Final, <<: *pg}
 
   # 节点地区
