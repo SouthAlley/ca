@@ -75,16 +75,15 @@ proxies: null
 
 # 代理策略
 proxy-groups:
-  - {name: 🚀 手动切换, type: select, use: [Subscribe1, Subscribe2], proxies: [🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇨🇳 台湾节点, DIRECT]}
-  - {name: 🌏 国外网站, <<: *pg}
-  - {name: 📽️ 国际媒体, <<: *pg}
-  - {name: 🍎 苹果服务, <<: *pg}
-  - {name: 🖥️ 微软服务, <<: *pg}
-  - {name: 🌌 谷歌服务, <<: *pg}
-  - {name: 📟 电报消息, <<: *pg}
+  - {name: 🕹️ Manual, type: select, use: [Subscribe1, Subscribe2], proxies: [🇭🇰 香港节点, 🇺🇸 美国节点, 🇸🇬 狮城节点, 🇯🇵 日本节点, 🇨🇳 台湾节点, DIRECT]}
+  - {name: 📽️ Streaming, <<: *pg}
+  - {name: 🍎 Apple, <<: *pg}
+  - {name: Ⓜ️ Microsoft, <<: *pg}
+  - {name: 🌎 Google, <<: *pg}
+  - {name: 🎈 Telegram, <<: *pg}
   - {name: 🤖 OpenAI, <<: *pg}
-  - {name: 🎮 游戏平台, <<: *pg}
-  - {name: 🐟 兜底分流, <<: *pg}
+  - {name: 🎮 Game, <<: *pg}
+  - {name: ♾️ Final, <<: *pg}
 
   # 节点地区
   - {name: 🇭🇰 香港节点, <<: *auto, filter: "^(?=.*((?i)🇭🇰|香港|(\b(HK|Hong)\b)))(?!.*((?i)回国|校园|游戏|(\b(GAME)\b))).*$"}
@@ -111,20 +110,14 @@ rule-providers:
 rules:
   - RULE-SET,Download,DIRECT
   - RULE-SET,OpenAI,🤖 OpenAI
-  - RULE-SET,Apple,🍎 苹果服务
-  - RULE-SET,OneDrive,🖥️ 微软服务
-  - RULE-SET,Github,🖥️ 微软服务
-  - RULE-SET,Microsoft,🖥️ 微软服务
-  - RULE-SET,YouTube,🌌 谷歌服务
-  - RULE-SET,Google,🌌 谷歌服务
-  - RULE-SET,Telegram,📟 电报消息
-  - RULE-SET,Twitter,🐦 推特消息
-  - RULE-SET,BiliBili,📺 哔哩哔哩
-  - RULE-SET,Steam,🎮 游戏平台
-  - RULE-SET,Epic,🎮 游戏平台
-  - RULE-SET,ProxyMedia,📽️ 国际媒体
-  - RULE-SET,ProxyGFW,🌏 国外网站
-  - RULE-SET,ChinaDomain,🌏 国内网站
+  - RULE-SET,Apple,🍎 Apple
+  - RULE-SET,Microsoft,Ⓜ️ Microsoft
+  - RULE-SET,Google,🌎 Google
+  - RULE-SET,Telegram,🎈 Telegram
+  - RULE-SET,Game,🎮 Game
+  - RULE-SET,ProxyMedia,📽️ Streaming
+  - RULE-SET,ProxyGFW,🕹️ Manual
+  - RULE-SET,ChinaDomain,DIRECT
   - RULE-SET,Lan,DIRECT
-  - GEOIP,CN,🌏 国内网站
-  - MATCH,🐟 兜底分流
+  - GEOIP,CN,DIRECT
+  - MATCH,♾️ Final
